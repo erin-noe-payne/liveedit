@@ -3,18 +3,18 @@
 var program = require('commander'),
   _ = require('underscore'),
   fs = require('node-fs'),
-  path = require('path'),
-  config = null;
+  path = require('path');
+
+
+var mode, config,
+  configPath = path.join(process.cwd(), '.livedit.json')
 
 try {
-  config = require('./../.liveedit.json')
+  config = require(configPath)
 }
 catch (e) {}
+
 config = config || {}
-
-var mode = null
-
-console.log('running')
 
 program.command('config')
   .option('-s, --source <path>', 'Sets the default source directory to watch')
@@ -37,7 +37,8 @@ function writeConfig(cmd) {
   if(source) config.source = source;
   if(target) config.target = target;
 
-  fs.writeFileSync('./.liveedit.json', JSON.stringify(config), 'utf-8');
+  fs.writeFileSync(configPath, JSON.stringify(config), 'utf-8');
+  console.log('Wrote ledit config file to ', configPath)
 }
 
 if(!mode) liveedit()
@@ -49,6 +50,7 @@ function liveedit() {
   source = path.resolve(process.cwd(), source);
   target = path.resolve(process.cwd(), target);
 
+  console.log('Recursively watching', source, 'for changes.')
   traverseAndWatch(source);
 
   function traverseAndWatch(p) {
