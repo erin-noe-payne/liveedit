@@ -1,0 +1,13 @@
+{
+    "name":"ledit",
+    "version":"0.0.1",
+    "main":"bin/liveedit.js",
+    "dependencies": {
+        "commander":"latest",
+        "underscore": "latest",
+        "node-fs":"latest"
+    },
+    "bin":{
+        "ledit":"bin/ledit.js"
+    }
+}
