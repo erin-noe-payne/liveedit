@@ -56,8 +56,7 @@ function liveedit() {
   function traverseAndWatch(p) {
     var stat = fs.statSync(p);
 
-    if (path.basename(p)[0] == '.' || path.basename(p) == 'images' ||
-      _.contains(['.png', '.jpg', '.jpeg', 'gif'], path.extname(p))) {
+    if (path.basename(p)[0] == '.' || path.basename(p) == 'images' ) {
       return;
     }
 
@@ -86,7 +85,7 @@ function liveedit() {
     var targetLocation = path.resolve(target, relativePath);
     var targetDir = path.dirname(targetLocation);
 
-    var sourceFile = fs.readFileSync(file, 'utf-8');
+    var sourceFile = fs.readFileSync(file);
     if (!fs.existsSync(targetDir)) {
       console.log(targetLocation);
       console.log(targetDir);
@@ -94,6 +93,6 @@ function liveedit() {
 
       fs.mkdirSync(targetDir, 777, true);
     }
-    fs.writeFileSync(targetLocation, sourceFile, 'utf-8');
+    fs.writeFileSync(targetLocation, sourceFile);
   }
 }
